@@ -3,15 +3,26 @@ package com.example.weplaysupport
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
+import de.hdodenhof.circleimageview.CircleImageView
 
 class TeamDetails : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.team_profile)
         val bundle: Bundle? = intent.extras
-        val member = bundle!!.get("member") as TeamMember
+        inflateLayout(bundle)
 
+
+
+    }
+    fun inflateLayout(bundle: Bundle?){
+        //Getting data
+        val member = bundle!!.get("member") as TeamMember
+        var posI = bundle!!.get("position") as Int
+
+        //Binding Data to UI feilds
         findViewById<TextView>(R.id.team_username).text = member.name
         findViewById<Button>(R.id.team_email_button).text = member.email
         findViewById<Button>(R.id.team_phone_button).text = member.phone
@@ -46,5 +57,9 @@ class TeamDetails : AppCompatActivity() {
         } else {
             "No Bio"
         }
+
+        var j: Int = this.resources.getIdentifier("team"+posI,"drawable", this.packageName)
+
+        findViewById<ImageView>(R.id.detail_profile).setImageResource(j)
     }
 }
